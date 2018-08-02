@@ -3,6 +3,8 @@ package popehiflo;
 import java.awt.FileDialog;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -26,12 +28,12 @@ public class TextEditorGui extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        fileMenu = new javax.swing.JMenu();
         newFileMenuItem = new javax.swing.JMenuItem();
         openFileMenuItem = new javax.swing.JMenuItem();
         saveFileMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        editMenu = new javax.swing.JMenu();
         cutTextMenuItem = new javax.swing.JMenuItem();
         copyTextMenuItem = new javax.swing.JMenuItem();
         pasteTextMenuItem = new javax.swing.JMenuItem();
@@ -66,7 +68,7 @@ public class TextEditorGui extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("File");
+        fileMenu.setText("File");
 
         newFileMenuItem.setText("New");
         newFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +76,7 @@ public class TextEditorGui extends javax.swing.JFrame {
                 newFileMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(newFileMenuItem);
+        fileMenu.add(newFileMenuItem);
 
         openFileMenuItem.setText("Open");
         openFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +84,7 @@ public class TextEditorGui extends javax.swing.JFrame {
                 openFileMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(openFileMenuItem);
+        fileMenu.add(openFileMenuItem);
 
         saveFileMenuItem.setText("Save");
         saveFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +92,7 @@ public class TextEditorGui extends javax.swing.JFrame {
                 saveFileMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(saveFileMenuItem);
+        fileMenu.add(saveFileMenuItem);
 
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -98,11 +100,11 @@ public class TextEditorGui extends javax.swing.JFrame {
                 exitMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(exitMenuItem);
+        fileMenu.add(exitMenuItem);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(fileMenu);
 
-        jMenu2.setText("Edit");
+        editMenu.setText("Edit");
 
         cutTextMenuItem.setText("Cut text");
         cutTextMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +112,7 @@ public class TextEditorGui extends javax.swing.JFrame {
                 cutTextMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(cutTextMenuItem);
+        editMenu.add(cutTextMenuItem);
 
         copyTextMenuItem.setText("Copy text");
         copyTextMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +120,7 @@ public class TextEditorGui extends javax.swing.JFrame {
                 copyTextMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(copyTextMenuItem);
+        editMenu.add(copyTextMenuItem);
 
         pasteTextMenuItem.setText("Paste text");
         pasteTextMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -126,9 +128,9 @@ public class TextEditorGui extends javax.swing.JFrame {
                 pasteTextMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(pasteTextMenuItem);
+        editMenu.add(pasteTextMenuItem);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(editMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -185,6 +187,17 @@ public class TextEditorGui extends javax.swing.JFrame {
         fileDialog.setVisible(true);
         
         if(fileDialog.getFile() != null){
+            fileName = fileDialog.getDirectory() + fileDialog.getFile();
+            setTitle(fileName);
+        }
+        try {
+            FileWriter fileWriter = new FileWriter(fileName);
+            fileWriter.write(textArea.getText());
+            setTitle(fileName);
+            fileWriter.close();
+            
+        } catch (IOException e) {
+            System.out.println("File Not Found");
         }
     }//GEN-LAST:event_saveFileMenuItemActionPerformed
 
@@ -239,9 +252,9 @@ public class TextEditorGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem copyTextMenuItem;
     private javax.swing.JMenuItem cutTextMenuItem;
+    private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
