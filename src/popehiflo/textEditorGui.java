@@ -1,6 +1,8 @@
 package popehiflo;
 
 import java.awt.FileDialog;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /**
  *
@@ -156,7 +158,26 @@ public class textEditorGui extends javax.swing.JFrame {
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
         FileDialog fileDialog = new FileDialog(textEditorGui.this, "Open File", FileDialog.LOAD);
-        setVisible(true);
+        fileDialog.setVisible(true);
+        
+        if(fileDialog.getFile() != null){
+            fileName = fileDialog.getDirectory() + fileDialog.getFile();
+            setTitle(fileName);
+        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            StringBuilder stringBuilder = new StringBuilder();
+            
+            String line = null;
+            
+            while ((line = reader.readLine()) != null) {                
+                stringBuilder.append(line + "\n");
+                textArea.setText(stringBuilder.toString());
+            }
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("File Not Found!");
+        }
     }//GEN-LAST:event_openFileMenuItemActionPerformed
 
     private void saveFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileMenuItemActionPerformed
