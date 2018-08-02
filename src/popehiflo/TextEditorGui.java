@@ -1,6 +1,8 @@
 package popehiflo;
 
 import java.awt.FileDialog;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,6 +15,7 @@ import java.io.IOException;
 public class TextEditorGui extends javax.swing.JFrame {
 
     String fileName;
+    Clipboard clipboard = getToolkit().getSystemClipboard();
     
     public TextEditorGui() {
         initComponents();
@@ -149,7 +152,11 @@ public class TextEditorGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cutTextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutTextMenuItemActionPerformed
-        // TODO add your handling code here:
+        String cutString = textArea.getSelectedText();
+        StringSelection cutSelection = new StringSelection(cutString);
+        clipboard.setContents(cutSelection, cutSelection);
+        textArea.replaceRange("", textArea.getSelectionStart(), textArea.getSelectionEnd());
+        
         
     }//GEN-LAST:event_cutTextMenuItemActionPerformed
 
@@ -202,7 +209,7 @@ public class TextEditorGui extends javax.swing.JFrame {
     }//GEN-LAST:event_saveFileMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void copyTextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyTextMenuItemActionPerformed
