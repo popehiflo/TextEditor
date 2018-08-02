@@ -2,7 +2,9 @@ package popehiflo;
 
 import java.awt.FileDialog;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -156,8 +158,6 @@ public class TextEditorGui extends javax.swing.JFrame {
         StringSelection cutSelection = new StringSelection(cutString);
         clipboard.setContents(cutSelection, cutSelection);
         textArea.replaceRange("", textArea.getSelectionStart(), textArea.getSelectionEnd());
-        
-        
     }//GEN-LAST:event_cutTextMenuItemActionPerformed
 
     private void newFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileMenuItemActionPerformed
@@ -213,11 +213,19 @@ public class TextEditorGui extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void copyTextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyTextMenuItemActionPerformed
-        // TODO add your handling code here:
+        String copyText = textArea.getSelectedText();
+        StringSelection copySelection = new StringSelection(copyText);
+        clipboard.setContents(copySelection, copySelection);
     }//GEN-LAST:event_copyTextMenuItemActionPerformed
 
     private void pasteTextMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteTextMenuItemActionPerformed
-        // TODO add your handling code here:
+        try {
+            Transferable pasteText = clipboard.getContents(TextEditorGui.this);
+            String sel = (String) pasteText.getTransferData(DataFlavor.stringFlavor);
+            textArea.replaceRange(sel, textArea.getSelectionStart(), textArea.getSelectionEnd());
+        } catch (Exception e) {
+            System.out.println("Did not work!");
+        }
     }//GEN-LAST:event_pasteTextMenuItemActionPerformed
     
     /**
