@@ -8,11 +8,11 @@ import java.io.FileReader;
  *
  * @author popehiflo
  */
-public class textEditorGui extends javax.swing.JFrame {
+public class TextEditorGui extends javax.swing.JFrame {
 
     String fileName;
     
-    public textEditorGui() {
+    public TextEditorGui() {
         initComponents();
     }
 
@@ -157,7 +157,7 @@ public class textEditorGui extends javax.swing.JFrame {
     }//GEN-LAST:event_newFileMenuItemActionPerformed
 
     private void openFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileMenuItemActionPerformed
-        FileDialog fileDialog = new FileDialog(textEditorGui.this, "Open File", FileDialog.LOAD);
+        FileDialog fileDialog = new FileDialog(TextEditorGui.this, "Open File", FileDialog.LOAD);
         fileDialog.setVisible(true);
         
         if(fileDialog.getFile() != null){
@@ -165,23 +165,27 @@ public class textEditorGui extends javax.swing.JFrame {
             setTitle(fileName);
         }
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             StringBuilder stringBuilder = new StringBuilder();
             
             String line = null;
             
-            while ((line = reader.readLine()) != null) {                
+            while ((line = bufferedReader.readLine()) != null) {                
                 stringBuilder.append(line + "\n");
                 textArea.setText(stringBuilder.toString());
             }
-            reader.close();
+            bufferedReader.close();
         } catch (Exception e) {
             System.out.println("File Not Found!");
         }
     }//GEN-LAST:event_openFileMenuItemActionPerformed
 
     private void saveFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileMenuItemActionPerformed
-        // TODO add your handling code here:
+        FileDialog fileDialog = new FileDialog(TextEditorGui.this, "Save File", FileDialog.SAVE);
+        fileDialog.setVisible(true);
+        
+        if(fileDialog.getFile() != null){
+        }
     }//GEN-LAST:event_saveFileMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -213,20 +217,21 @@ public class textEditorGui extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(textEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TextEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(textEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TextEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(textEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TextEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(textEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TextEditorGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new textEditorGui().setVisible(true);
+                new TextEditorGui().setVisible(true);
             }
         });
     }

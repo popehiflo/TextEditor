@@ -10,7 +10,7 @@ public class TextEditor {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        textEditorGui obj = new textEditorGui();
+        TextEditorGui obj = new TextEditorGui();
         obj.setBounds(0, 0, 700, 700);
         obj.setTitle("Editor de texto");
         obj.setResizable(false);
