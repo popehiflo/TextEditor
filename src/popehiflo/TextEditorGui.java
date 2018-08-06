@@ -1,5 +1,6 @@
 package popehiflo;
 
+import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -9,6 +10,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Document;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -46,6 +51,11 @@ public class TextEditorGui extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
 
         textArea.setColumns(20);
         textArea.setRows(5);
@@ -227,10 +237,48 @@ public class TextEditorGui extends javax.swing.JFrame {
             System.out.println("Did not work!");
         }
     }//GEN-LAST:event_pasteTextMenuItemActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        searchTextArea(textArea, searchTextField.getText());
+    }//GEN-LAST:event_searchButtonActionPerformed
     
-    /**
-     * @param args the command line arguments
-     */
+    class myHighlighter extends DefaultHighlighter.DefaultHighlightPainter {
+        
+        public myHighlighter(Color c) {
+            super(c);
+        }
+        
+    }
+    
+    DefaultHighlighter.HighlightPainter highlightPainter = new myHighlighter(Color.yellow);
+    public void removeHighLight(JTextComponent textComp) {
+        Highlighter removeHighlighter = textComp.getHighlighter();
+        Highlighter.Highlight[] remove = removeHighlighter.getHighlights();
+        
+        for(int i = 0; i < remove.length; i++) {
+            if(remove[i].getPainter() instanceof myHighlighter) {
+                removeHighlighter.removeHighlight(remove[i]);
+            }
+        }
+    }
+    
+    public void searchTextArea(JTextComponent textComp, String textString){
+        removeHighLight(textComp);
+        try {
+            Highlighter highlighter = textComp.getHighlighter();
+            Document doc = textComp.getDocument();
+            String text = doc.getText(0, doc.getLength());
+            
+            int pos = 0;
+            
+            while ((pos = text.toUpperCase().indexOf(textString.toUpperCase(), pos)) >= 0){
+                highlighter.addHighlight(pos, pos + textString.length(), highlightPainter);
+                pos += textString.length();
+            }
+        } catch (Exception e) {
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
